@@ -5,39 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Evrak Kayıt">
-<meta name="theme-color" content="#1f6f5c">
+<meta name="theme-color" content="#6b2d6b">
 <title>Evrak Kayıt</title>
 <style>
-:root{--ana:#1f6f5c;--ana2:#2a9d7f;--zemin:#eef3f1;--yazi:#1c1c1e;--kenar:#c9d6d1}
+:root{--ana:#6b2d6b;--ana2:#a46bb5;--zemin:#f5eef7;--yazi:#2a1a2e;--kenar:#dccbe3}
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,"SF Pro Text",sans-serif;background:var(--zemin);color:var(--yazi);font-size:20px;padding-bottom:40px}
-header{background:linear-gradient(135deg,var(--ana),var(--ana2));color:#fff;padding:calc(env(safe-area-inset-top) + 20px) 20px 24px;border-radius:0 0 28px 28px;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+header{background:linear-gradient(135deg,var(--ana),var(--ana2));color:#fff;padding:calc(env(safe-area-inset-top) + 20px) 20px 24px;border-radius:0 0 28px 28px;box-shadow:0 4px 14px rgba(107,45,107,.3)}
 header h1{margin:0;font-size:28px;font-weight:800}
-.rozet{display:inline-block;margin-top:12px;background:rgba(255,255,255,.2);padding:8px 16px;border-radius:20px;font-size:20px}
+.rozet{display:inline-block;margin-top:12px;background:rgba(255,255,255,.22);padding:8px 16px;border-radius:20px;font-size:20px}
 .rozet b{font-size:24px}
 main{padding:16px}
-.kart{background:#fff;border-radius:20px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.kart{background:#fff;border-radius:20px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px rgba(107,45,107,.08)}
 .kart h2{margin:0 0 6px;font-size:22px;color:var(--ana)}
 label{display:block;margin-top:16px;margin-bottom:6px;font-weight:700;font-size:20px}
-input,select{width:100%;height:60px;padding:0 16px;font-size:22px;border:2px solid var(--kenar);border-radius:14px;background:#fafcfb;color:var(--yazi);-webkit-appearance:none;appearance:none}
+input,select{width:100%;height:60px;padding:0 16px;font-size:22px;border:2px solid var(--kenar);border-radius:14px;background:#fcf9fd;color:var(--yazi);-webkit-appearance:none;appearance:none}
 input:focus,select:focus{outline:none;border-color:var(--ana2);background:#fff}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12'%3E%3Cpath d='M2 2l8 8 8-8' stroke='%231f6f5c' stroke-width='3' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:48px}
-.imza{display:flex;align-items:center;gap:14px;margin-top:18px;padding:16px;border:2px solid var(--kenar);border-radius:14px;background:#fafcfb;font-size:22px;font-weight:700}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12'%3E%3Cpath d='M2 2l8 8 8-8' stroke='%236b2d6b' stroke-width='3' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:48px}
+.imza{display:flex;align-items:center;gap:14px;margin-top:18px;padding:16px;border:2px solid var(--kenar);border-radius:14px;background:#fcf9fd;font-size:22px;font-weight:700}
 .imza input{width:36px;height:36px;-webkit-appearance:checkbox;appearance:auto;accent-color:var(--ana)}
-button{width:100%;min-height:64px;font-size:22px;font-weight:700;border:none;border-radius:16px;margin-top:14px;color:#fff;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+button{width:100%;min-height:64px;font-size:22px;font-weight:700;border:none;border-radius:16px;margin-top:14px;color:#fff;box-shadow:0 3px 8px rgba(107,45,107,.2)}
 button:active{transform:scale(.98);opacity:.9}
+button:disabled{opacity:.35}
 .ekle{background:#fff;color:var(--ana);border:2px dashed var(--ana2);box-shadow:none;min-height:54px;font-size:20px}
-.kaydet{background:#2e9e4f;min-height:72px;font-size:26px}
-.excel{background:#1d6fd8}
-.yazdir{background:#e07b00}
-#sayac{text-align:center;margin-top:18px;font-size:20px;color:#555}
+.kaydet{background:#6b2d6b;min-height:72px;font-size:26px}
+.excel{background:#8e4f9e}
+.yazdir{background:#b07cc0}
+#sayac{text-align:center;margin-top:18px;font-size:20px;color:#6b5670}
+.filtreler{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.filtreler .tam{grid-column:1/-1}
+.filtreler input,.filtreler select{height:54px;font-size:19px}
+.tabloKutu{overflow-x:auto;margin-top:14px;border-radius:14px;border:2px solid var(--kenar);-webkit-overflow-scrolling:touch}
+table.liste{border-collapse:collapse;min-width:950px;width:100%;font-size:18px;background:#fff}
+table.liste th{background:var(--ana);color:#fff;text-align:left;padding:12px;white-space:nowrap}
+table.liste td{padding:12px;border-top:1px solid var(--kenar);white-space:nowrap}
+table.liste tr:nth-child(even) td{background:#faf5fb}
+.evet{color:#2e7d32;font-weight:700}.hayir{color:#c62828;font-weight:700}
+.bos{text-align:center;padding:20px;color:#6b5670}
+.sayfalama{display:flex;align-items:center;gap:10px;margin-top:14px}
+.sayfalama button{flex:1;width:auto;margin:0;min-height:54px;font-size:19px;background:var(--ana2)}
+#sayfaBilgi{flex:1.3;text-align:center;font-size:17px;font-weight:600}
 #tablo{display:none}
 @media print{
  body{background:#fff;font-size:12px}
  body>*:not(#tablo){display:none!important}
  #tablo{display:block}
- table{width:100%;border-collapse:collapse;font-size:11px}
- th,td{border:1px solid #000;padding:4px}
+ #tablo table{width:100%;border-collapse:collapse;font-size:11px}
+ #tablo th,#tablo td{border:1px solid #000;padding:4px}
 }
 </style>
 </head>
@@ -66,6 +80,32 @@ button:active{transform:scale(.98);opacity:.9}
  <button class="excel" onclick="excel()">📊 Excel'e Aktar</button>
  <button class="yazdir" onclick="yazdir()">🖨️ Yazdır</button>
  <div id="sayac"></div>
+
+ <div class="kart" style="margin-top:20px">
+  <h2>🔎 Kayıtlar</h2>
+  <div class="filtreler">
+   <input class="tam" type="search" id="ara" placeholder="Ad, soyad, kurum, telefon ara...">
+   <select id="fsite"></select>
+   <select id="fgun">
+    <option value="tumu">Tüm Tarihler</option>
+    <option value="1">Bugün</option>
+    <option value="5">Son 5 Gün</option>
+    <option value="7">Son 7 Gün</option>
+    <option value="30">Son 30 Gün</option>
+   </select>
+   <select class="tam" id="fimza">
+    <option value="">İmzalı ve İmzasız</option>
+    <option value="Evet">Sadece İmzalananlar</option>
+    <option value="Hayır">Sadece İmzalanmayanlar</option>
+   </select>
+  </div>
+  <div class="tabloKutu" id="liste"></div>
+  <div class="sayfalama">
+   <button id="onceki" onclick="sayfaDegis(-1)">◀ Önceki</button>
+   <div id="sayfaBilgi"></div>
+   <button id="sonraki" onclick="sayfaDegis(1)">Sonraki ▶</button>
+  </div>
+ </div>
 </main>
 <div id="tablo"></div>
 <script>
@@ -74,9 +114,15 @@ let siteler=JSON.parse(localStorage.getItem("siteler")||"null")||varsayilan;
 let kayitlar=JSON.parse(localStorage.getItem("kayitlar")||"[]");
 const $=id=>document.getElementById(id);
 const basliklar=["Sıra No","Tarih","Ad Soyad","Kurum","Evrakı Alan","Alış Tarihi","İmza","Site","Telefon"];
+const SAYFA_BOYU=10;let sayfa=1;
 function bugun(){return new Date().toISOString().slice(0,10)}
-function siteleriDoldur(sec){$("site").innerHTML=siteler.map(s=>`<option>${s}</option>`).join("");if(sec)$("site").value=sec}
-function guncelle(){$("sira").textContent=kayitlar.length+1;$("sayac").textContent="Toplam kayıt: "+kayitlar.length}
+function trTarih(d){return d?d.split("-").reverse().join("."):""}
+function temiz(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function siteleriDoldur(sec){
+ const opt=siteler.map(s=>`<option>${temiz(s)}</option>`).join("");
+ $("site").innerHTML=opt;if(sec)$("site").value=sec;
+ const f=$("fsite").value;$("fsite").innerHTML='<option value="">Tüm Siteler</option>'+opt;$("fsite").value=f}
+function guncelle(){$("sira").textContent=kayitlar.length+1;$("sayac").textContent="Toplam kayıt: "+kayitlar.length;listele()}
 function siteEkle(){const ad=prompt("Yeni site adı:");if(ad&&ad.trim()){siteler.push(ad.trim());localStorage.setItem("siteler",JSON.stringify(siteler));siteleriDoldur(ad.trim())}}
 function numaraDuzelt(t){let n=t.replace(/\D/g,"");if(n.startsWith("0"))n=n.slice(1);if(n.length===10)n="90"+n;return n}
 function whatsapp(k){
@@ -88,8 +134,31 @@ function kaydet(){
  if(!k.adsoyad){alert("Ad Soyad boş olamaz");return}
  kayitlar.push(k);localStorage.setItem("kayitlar",JSON.stringify(kayitlar));
  ["adsoyad","kurum","alan","telefon"].forEach(i=>$(i).value="");$("imza").checked=false;
- guncelle();window.scrollTo({top:0,behavior:"smooth"});
+ sayfa=1;guncelle();window.scrollTo({top:0,behavior:"smooth"});
  if(k.telefon&&confirm("Kaydedildi. WhatsApp'tan haber verilsin mi?"))whatsapp(k);else alert("Kaydedildi")}
+function filtrele(){
+ const q=$("ara").value.toLocaleLowerCase("tr").trim();
+ const s=$("fsite").value,g=$("fgun").value,im=$("fimza").value;
+ let sinir=null;
+ if(g!=="tumu"){sinir=new Date();sinir.setHours(0,0,0,0);sinir.setDate(sinir.getDate()-(Number(g)-1))}
+ return kayitlar.filter(k=>{
+  if(q){const metin=[k.sira,k.tarih,trTarih(k.tarih),k.adsoyad,k.kurum,k.alan,k.alistarihi,trTarih(k.alistarihi),k.imza,k.site,k.telefon].join(" ").toLocaleLowerCase("tr");if(!metin.includes(q))return false}
+  if(s&&k.site!==s)return false;
+  if(im&&k.imza!==im)return false;
+  if(sinir){if(!k.tarih)return false;if(new Date(k.tarih+"T00:00:00")<sinir)return false}
+  return true}).reverse()}
+function listele(){
+ const l=filtrele();const top=Math.max(1,Math.ceil(l.length/SAYFA_BOYU));
+ if(sayfa>top)sayfa=top;if(sayfa<1)sayfa=1;
+ const parca=l.slice((sayfa-1)*SAYFA_BOYU,sayfa*SAYFA_BOYU);
+ if(!parca.length){$("liste").innerHTML='<div class="bos">Kayıt bulunamadı</div>'}
+ else{
+  $("liste").innerHTML="<table class='liste'><tr>"+basliklar.map(b=>`<th>${b}</th>`).join("")+"</tr>"+
+  parca.map(k=>`<tr><td>${k.sira}</td><td>${trTarih(k.tarih)}</td><td><b>${temiz(k.adsoyad)}</b></td><td>${temiz(k.kurum)}</td><td>${temiz(k.alan)}</td><td>${trTarih(k.alistarihi)}</td><td class="${k.imza==="Evet"?"evet":"hayir"}">${k.imza==="Evet"?"✔ Evet":"✘ Hayır"}</td><td>${temiz(k.site)}</td><td>${temiz(k.telefon)}</td></tr>`).join("")+"</table>"}
+ $("sayfaBilgi").textContent=`Sayfa ${sayfa} / ${top} · ${l.length} kayıt`;
+ $("onceki").disabled=sayfa<=1;$("sonraki").disabled=sayfa>=top}
+function sayfaDegis(d){sayfa+=d;listele()}
+["ara","fsite","fgun","fimza"].forEach(id=>$(id).addEventListener("input",()=>{sayfa=1;listele()}));
 function excel(){
  const satir=r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(";");
  const csv="\uFEFF"+[satir(basliklar),...kayitlar.map(k=>satir(Object.values(k)))].join("\n");
@@ -98,7 +167,7 @@ function excel(){
 function yazdir(){
  if(!kayitlar.length){alert("Yazdırılacak kayıt yok");return}
  $("tablo").innerHTML="<h2>Evrak Kayıtları</h2><table><tr>"+basliklar.map(b=>`<th>${b}</th>`).join("")+"</tr>"+
-  kayitlar.map(k=>"<tr>"+Object.values(k).map(v=>`<td>${v}</td>`).join("")+"</tr>").join("")+"</table>";
+  kayitlar.map(k=>"<tr>"+Object.values(k).map(v=>`<td>${temiz(v)}</td>`).join("")+"</tr>").join("")+"</table>";
  window.print()}
 $("tarih").value=bugun();$("alistarihi").value=bugun();siteleriDoldur();guncelle();
 </script>
