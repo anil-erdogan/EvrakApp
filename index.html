@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Evrak Kayıt">
+<meta name="theme-color" content="#1f6f5c">
+<title>Evrak Kayıt</title>
+<style>
+:root{--ana:#1f6f5c;--ana2:#2a9d7f;--zemin:#eef3f1;--yazi:#1c1c1e;--kenar:#c9d6d1}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"SF Pro Text",sans-serif;background:var(--zemin);color:var(--yazi);font-size:20px;padding-bottom:40px}
+header{background:linear-gradient(135deg,var(--ana),var(--ana2));color:#fff;padding:calc(env(safe-area-inset-top) + 20px) 20px 24px;border-radius:0 0 28px 28px;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+header h1{margin:0;font-size:28px;font-weight:800}
+.rozet{display:inline-block;margin-top:12px;background:rgba(255,255,255,.2);padding:8px 16px;border-radius:20px;font-size:20px}
+.rozet b{font-size:24px}
+main{padding:16px}
+.kart{background:#fff;border-radius:20px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.kart h2{margin:0 0 6px;font-size:22px;color:var(--ana)}
+label{display:block;margin-top:16px;margin-bottom:6px;font-weight:700;font-size:20px}
+input,select{width:100%;height:60px;padding:0 16px;font-size:22px;border:2px solid var(--kenar);border-radius:14px;background:#fafcfb;color:var(--yazi);-webkit-appearance:none;appearance:none}
+input:focus,select:focus{outline:none;border-color:var(--ana2);background:#fff}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12'%3E%3Cpath d='M2 2l8 8 8-8' stroke='%231f6f5c' stroke-width='3' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:48px}
+.imza{display:flex;align-items:center;gap:14px;margin-top:18px;padding:16px;border:2px solid var(--kenar);border-radius:14px;background:#fafcfb;font-size:22px;font-weight:700}
+.imza input{width:36px;height:36px;-webkit-appearance:checkbox;appearance:auto;accent-color:var(--ana)}
+button{width:100%;min-height:64px;font-size:22px;font-weight:700;border:none;border-radius:16px;margin-top:14px;color:#fff;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+button:active{transform:scale(.98);opacity:.9}
+.ekle{background:#fff;color:var(--ana);border:2px dashed var(--ana2);box-shadow:none;min-height:54px;font-size:20px}
+.kaydet{background:#2e9e4f;min-height:72px;font-size:26px}
+.excel{background:#1d6fd8}
+.yazdir{background:#e07b00}
+#sayac{text-align:center;margin-top:18px;font-size:20px;color:#555}
+#tablo{display:none}
+@media print{
+ body{background:#fff;font-size:12px}
+ body>*:not(#tablo){display:none!important}
+ #tablo{display:block}
+ table{width:100%;border-collapse:collapse;font-size:11px}
+ th,td{border:1px solid #000;padding:4px}
+}
+</style>
+</head>
+<body>
+<header>
+ <h1>📋 Evrak Kayıt</h1>
+ <div class="rozet">Sıra No: <b id="sira"></b></div>
+</header>
+<main>
+ <div class="kart">
+  <h2>Evrak Bilgileri</h2>
+  <label>Tarih</label><input type="date" id="tarih">
+  <label>Evrakın Geldiği Kurum</label><input id="kurum">
+  <label>Evrak Alış Tarihi</label><input type="date" id="alistarihi">
+ </div>
+ <div class="kart">
+  <h2>Kişi Bilgileri</h2>
+  <label>Ad Soyad</label><input id="adsoyad" autocapitalize="words">
+  <label>Evrakı Alanın Adı Soyadı</label><input id="alan" autocapitalize="words">
+  <label>Evrakı Alanın Telefonu</label><input type="tel" id="telefon" placeholder="05xx xxx xx xx">
+  <label>Oturduğu Site</label><select id="site"></select>
+  <button class="ekle" onclick="siteEkle()">➕ Yeni Site Ekle</button>
+  <label class="imza"><input type="checkbox" id="imza"> İmzalandı</label>
+ </div>
+ <button class="kaydet" onclick="kaydet()">✅ Kaydet</button>
+ <button class="excel" onclick="excel()">📊 Excel'e Aktar</button>
+ <button class="yazdir" onclick="yazdir()">🖨️ Yazdır</button>
+ <div id="sayac"></div>
+</main>
+<div id="tablo"></div>
+<script>
+const varsayilan=["Simpaş","TOKİ 2. Etap Milletvekili Konutları","Can Atabilge","Aka Atabilge","Yeni Atabilge"];
+let siteler=JSON.parse(localStorage.getItem("siteler")||"null")||varsayilan;
+let kayitlar=JSON.parse(localStorage.getItem("kayitlar")||"[]");
+const $=id=>document.getElementById(id);
+const basliklar=["Sıra No","Tarih","Ad Soyad","Kurum","Evrakı Alan","Alış Tarihi","İmza","Site","Telefon"];
+function bugun(){return new Date().toISOString().slice(0,10)}
+function siteleriDoldur(sec){$("site").innerHTML=siteler.map(s=>`<option>${s}</option>`).join("");if(sec)$("site").value=sec}
+function guncelle(){$("sira").textContent=kayitlar.length+1;$("sayac").textContent="Toplam kayıt: "+kayitlar.length}
+function siteEkle(){const ad=prompt("Yeni site adı:");if(ad&&ad.trim()){siteler.push(ad.trim());localStorage.setItem("siteler",JSON.stringify(siteler));siteleriDoldur(ad.trim())}}
+function numaraDuzelt(t){let n=t.replace(/\D/g,"");if(n.startsWith("0"))n=n.slice(1);if(n.length===10)n="90"+n;return n}
+function whatsapp(k){
+ const no=numaraDuzelt(k.telefon);if(no.length<12)return;
+ const mesaj=`Sayın ${k.adsoyad}, ${k.kurum?k.kurum+" tarafından ":""}adınıza gelen evrak muhtarlığımıza ulaşmıştır. Muhtarlıktan teslim alabilirsiniz.`;
+ window.location.href="https://wa.me/"+no+"?text="+encodeURIComponent(mesaj)}
+function kaydet(){
+ const k={sira:kayitlar.length+1,tarih:$("tarih").value,adsoyad:$("adsoyad").value,kurum:$("kurum").value,alan:$("alan").value,alistarihi:$("alistarihi").value,imza:$("imza").checked?"Evet":"Hayır",site:$("site").value,telefon:$("telefon").value};
+ if(!k.adsoyad){alert("Ad Soyad boş olamaz");return}
+ kayitlar.push(k);localStorage.setItem("kayitlar",JSON.stringify(kayitlar));
+ ["adsoyad","kurum","alan","telefon"].forEach(i=>$(i).value="");$("imza").checked=false;
+ guncelle();window.scrollTo({top:0,behavior:"smooth"});
+ if(k.telefon&&confirm("Kaydedildi. WhatsApp'tan haber verilsin mi?"))whatsapp(k);else alert("Kaydedildi")}
+function excel(){
+ const satir=r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(";");
+ const csv="\uFEFF"+[satir(basliklar),...kayitlar.map(k=>satir(Object.values(k)))].join("\n");
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+ a.download="evrak_kayitlari.csv";a.click()}
+function yazdir(){
+ if(!kayitlar.length){alert("Yazdırılacak kayıt yok");return}
+ $("tablo").innerHTML="<h2>Evrak Kayıtları</h2><table><tr>"+basliklar.map(b=>`<th>${b}</th>`).join("")+"</tr>"+
+  kayitlar.map(k=>"<tr>"+Object.values(k).map(v=>`<td>${v}</td>`).join("")+"</tr>").join("")+"</table>";
+ window.print()}
+$("tarih").value=bugun();$("alistarihi").value=bugun();siteleriDoldur();guncelle();
+</script>
+</body>
+</html>
